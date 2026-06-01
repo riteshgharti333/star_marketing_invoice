@@ -21,6 +21,7 @@ import { Context } from "./Context/Context";
 
 import Login from "./pages/Login/Login";
 import Profile from "./pages/Profile/Profile";
+import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
   const { user } = useContext(Context);
@@ -31,6 +32,8 @@ function App() {
         <Toaster position="top-center" richColors />
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+
           <Route element={<Layout />}>
             <Route path="/" element={<Invoice />} />
             <Route path="/invoice" element={<Invoice />} />
