@@ -257,7 +257,7 @@ const NewQuotation = () => {
 
   const totalInvoiceAmount = productData.reduce(
     (acc, item) => acc + calculateNetAmount(item),
-    0
+    0,
   );
 
   const calculateDiscountAmount = (item) => {
@@ -280,7 +280,7 @@ const NewQuotation = () => {
 
   const totalDiscountAmount = productData.reduce(
     (acc, item) => acc + calculateDiscountAmount(item),
-    0
+    0,
   );
 
   const [extraDiscount, setExtraDiscount] = useState(0);
@@ -447,7 +447,7 @@ const NewQuotation = () => {
         invoiceData,
         {
           withCredentials: true,
-        }
+        },
       );
 
       console.log(data);
@@ -459,7 +459,7 @@ const NewQuotation = () => {
     } catch (error) {
       console.error("Error creating quotation:", error);
       toast.error(
-        error.response?.data?.message || "Failed to create quotation"
+        error.response?.data?.message || "Failed to create quotation",
       );
     } finally {
       setIsLoading(false);

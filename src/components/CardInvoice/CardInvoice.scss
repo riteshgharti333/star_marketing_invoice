@@ -26,15 +26,14 @@
       display: flex;
       justify-content: space-between;
 
-      @include sm{
+      @include sm {
         flex-direction: column;
         gap: 20px;
-        
       }
       .cardInvoice-top-left {
         display: flex;
         align-items: center;
-        gap:5px;
+        gap: 5px;
 
         .cross-icon {
           font-size: 30px;
@@ -44,13 +43,12 @@
         }
       }
 
-      .cardInvoice-top-right{
+      .cardInvoice-top-right {
         display: flex;
         gap: 10px;
-        button{
-          background: #FFF6CD;
+        button {
+          background: #fff6cd;
           color: #000;
-          
         }
       }
     }
@@ -173,7 +171,7 @@
           font-size: 14px;
           text-align: center;
 
-          @include sm{
+          @include sm {
             padding: 5px 1px;
             font-size: 11px;
           }
@@ -243,7 +241,7 @@
         margin-bottom: 20px;
         gap: 30px;
 
-        @include sm{
+        @include sm {
           margin-top: 30px;
         }
         p {

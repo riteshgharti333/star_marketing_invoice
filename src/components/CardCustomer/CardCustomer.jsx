@@ -17,7 +17,7 @@ const CardCustomer = ({ setOpenCustomerCard, customer }) => {
     const getAllInvoices = async () => {
       try {
         const invoicePromises = customer.invoiceId.map((id) =>
-          axios.get(`${baseUrl}/invoice/${id}`)
+          axios.get(`${baseUrl}/invoice/${id}`),
         );
 
         const responses = await Promise.all(invoicePromises);
@@ -36,12 +36,12 @@ const CardCustomer = ({ setOpenCustomerCard, customer }) => {
 
   const totalAmount = invoiceIdData.reduce(
     (acc, curr) => acc + (curr.totalAmount || 0),
-    0
+    0,
   );
 
   const totalClosingBalance = invoiceIdData.reduce(
     (acc, curr) => acc + (curr.amountBalance || 0),
-    0
+    0,
   );
 
   return (

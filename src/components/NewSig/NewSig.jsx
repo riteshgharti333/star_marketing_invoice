@@ -37,7 +37,7 @@ const NewSig = ({ setOpensig, handleSigData }) => {
         { withCredentials: true },
         {
           headers: { "Content-Type": "multipart/form-data" },
-        }
+        },
       );
 
       toast.success("Signature added successfully!");

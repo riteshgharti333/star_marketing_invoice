@@ -45,8 +45,8 @@ const customStyles = {
     backgroundColor: state.isSelected
       ? "#007bff"
       : state.isFocused
-      ? "#e6f0ff"
-      : "#fff",
+        ? "#e6f0ff"
+        : "#fff",
     color: state.isSelected ? "#fff" : "#333",
     padding: "8px 12px",
   }),
@@ -79,13 +79,13 @@ const Customer = () => {
             if (customer.invoiceId?.length) {
               const invoiceResponses = await Promise.all(
                 customer.invoiceId.map((id) =>
-                  axios.get(`${baseUrl}/invoice/${id}`)
-                )
+                  axios.get(`${baseUrl}/invoice/${id}`),
+                ),
               );
 
               closingBalance = invoiceResponses.reduce(
                 (acc, res) => acc + (res.data.invoice?.amountBalance || 0),
-                0
+                0,
               );
             }
 
@@ -93,7 +93,7 @@ const Customer = () => {
               ...customer,
               closingBalance,
             };
-          })
+          }),
         );
 
         setCustomers(customerWithBalance);
@@ -111,7 +111,7 @@ const Customer = () => {
     const getAllInvoices = async () => {
       try {
         const invoicePromises = customers.invoiceId.map((id) =>
-          axios.get(`${baseUrl}/invoice/${id}`)
+          axios.get(`${baseUrl}/invoice/${id}`),
         );
 
         const responses = await Promise.all(invoicePromises);
@@ -170,7 +170,7 @@ const Customer = () => {
         },
       },
     ],
-    []
+    [],
   );
 
   const table = useReactTable({
@@ -287,13 +287,13 @@ const Customer = () => {
                   >
                     {flexRender(
                       header.column.columnDef.header,
-                      header.getContext()
+                      header.getContext(),
                     )}
                     {header.column.getIsSorted() === "asc"
                       ? " 🔼"
                       : header.column.getIsSorted() === "desc"
-                      ? " 🔽"
-                      : ""}
+                        ? " 🔽"
+                        : ""}
                   </th>
                 ))}
               </tr>

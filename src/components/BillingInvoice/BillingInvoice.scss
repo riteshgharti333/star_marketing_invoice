@@ -1,92 +1,92 @@
 .invoice-wrapper {
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 20px;
-    background: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-family: 'Poppins', sans-serif;
-    color: #333;
-  
-    .invoice-header {
-      text-align: center;
-      margin-bottom: 20px;
-  
-      h1 {
-        margin-bottom: 5px;
-        font-size: 28px;
-        color: #0046fd;
-      }
-  
-      .contact-info {
-        font-size: 14px;
-        color: #666;
-      }
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+
+  .invoice-header {
+    text-align: center;
+    margin-bottom: 20px;
+
+    h1 {
+      margin-bottom: 5px;
+      font-size: 28px;
+      color: #0046fd;
     }
-  
-    .invoice-details,
-    .customer-details {
-      margin-bottom: 20px;
-      font-size: 15px;
-      line-height: 1.6;
-  
-      strong {
-        font-weight: 600;
-        margin-right: 8px;
-      }
-    }
-  
-    .customer-details {
-      h3 {
-        margin-bottom: 5px;
-        font-size: 18px;
-        color: #222;
-      }
-    }
-  
-    .invoice-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 20px;
-  
-      th, td {
-        padding: 12px 10px;
-        border: 1px solid #ddd;
-        text-align: center;
-        font-size: 14px;
-      }
-  
-      th {
-        background-color: #f5f5f5;
-        font-weight: 600;
-      }
-  
-      td {
-        font-weight: 500;
-      }
-    }
-  
-    .invoice-totals {
-      font-size: 16px;
-      line-height: 1.8;
-  
-      p {
-        margin: 4px 0;
-      }
-    }
-  
-    .invoice-footer {
-      margin-top: 40px;
-      text-align: right;
+
+    .contact-info {
       font-size: 14px;
-      color: #555;
-  
-      .powered-by {
-        text-align: center;
-        margin-top: 30px;
-        font-size: 12px;
-        color: #888;
-      }
+      color: #666;
     }
   }
-  
+
+  .invoice-details,
+  .customer-details {
+    margin-bottom: 20px;
+    font-size: 15px;
+    line-height: 1.6;
+
+    strong {
+      font-weight: 600;
+      margin-right: 8px;
+    }
+  }
+
+  .customer-details {
+    h3 {
+      margin-bottom: 5px;
+      font-size: 18px;
+      color: #222;
+    }
+  }
+
+  .invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+
+    th,
+    td {
+      padding: 12px 10px;
+      border: 1px solid #ddd;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: #f5f5f5;
+      font-weight: 600;
+    }
+
+    td {
+      font-weight: 500;
+    }
+  }
+
+  .invoice-totals {
+    font-size: 16px;
+    line-height: 1.8;
+
+    p {
+      margin: 4px 0;
+    }
+  }
+
+  .invoice-footer {
+    margin-top: 40px;
+    text-align: right;
+    font-size: 14px;
+    color: #555;
+
+    .powered-by {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 12px;
+      color: #888;
+    }
+  }
+}

@@ -1,11 +1,7 @@
-import './Dashboard.scss'
+import "./Dashboard.scss";
 
 const Dashboard = () => {
-  return (
-    <div className='dashboard'>
-      
-    </div>
-  )
-}
+  return <div className="dashboard"></div>;
+};
 
-export default Dashboard
+export default Dashboard;

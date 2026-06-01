@@ -38,11 +38,11 @@ const NewCustomer = ({ setOpenCustomer, handleCustomerData }) => {
       const { data } = await axios.post(
         `${baseUrl}/customer/new-customer`,
         userData,
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       if (data && data.customer) {
-        console.log(data)
+        console.log(data);
         toast.success(data.message);
         setOpenCustomer(false);
         handleCustomerData(data.customer);

@@ -47,7 +47,7 @@
       }
 
       .cardCustomer-content {
-        p{
+        p {
           margin-top: 10px;
           font-size: 20px;
           font-weight: bold;
@@ -62,8 +62,8 @@
         font-size: 25px;
         margin-bottom: 20px;
 
-        span{
-          &:first-child{
+        span {
+          &:first-child {
             font-size: 18px;
           }
         }
@@ -74,14 +74,14 @@
         border-collapse: collapse;
         text-align: center;
         font-size: 14px;
-        @include md{
+        @include md {
           display: none;
         }
 
         th,
         td {
           padding: 10px;
-          border: none; 
+          border: none;
         }
 
         thead {
@@ -131,7 +131,7 @@
   }
 }
 
-.cardCustomer-sm{
+.cardCustomer-sm {
   display: flex;
   justify-content: space-between;
   background: #fff;
@@ -140,35 +140,34 @@
   @media (min-width: "769px") {
     display: none;
   }
-  
-  .cardCustomer-sm-left{
+
+  .cardCustomer-sm-left {
     display: flex;
     flex-direction: column;
     gap: 5px;
-   p{
-    &:first-child{
-      font-weight: bold;
+    p {
+      &:first-child {
+        font-weight: bold;
+      }
     }
-   }
   }
-  .cardCustomer-sm-right{
+  .cardCustomer-sm-right {
     display: flex;
     flex-direction: column;
     gap: 5px;
 
-    p{
+    p {
       font-weight: bold;
-      &:nth-child(2){
+      &:nth-child(2) {
         font-size: 22px;
         font-weight: bold;
         color: $primary-color;
       }
 
-      &:nth-child(3){
+      &:nth-child(3) {
         color: $secondary-color;
         font-weight: bold;
       }
     }
   }
 }
-

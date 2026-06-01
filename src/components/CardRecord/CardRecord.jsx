@@ -51,7 +51,7 @@ const CardRecord = ({ setCardRecordOpen, invoiceData }) => {
 
     if (Number(paymentAmount) > amountBalance) {
       return toast.error(
-        `Amount must be less than or equal to ₹${amountBalance}`
+        `Amount must be less than or equal to ₹${amountBalance}`,
       );
     }
 
@@ -72,7 +72,7 @@ const CardRecord = ({ setCardRecordOpen, invoiceData }) => {
         },
         {
           withCredentials: true,
-        }
+        },
       );
 
       toast.success("Payment recorded successfully");

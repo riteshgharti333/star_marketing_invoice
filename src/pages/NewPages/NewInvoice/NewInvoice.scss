@@ -147,7 +147,6 @@
       .customer-name-sm {
         margin-top: 10px;
 
-
         @media (min-width: "1121px") {
           display: none;
         }
@@ -984,7 +983,7 @@
       gap: 10px;
       margin-right: 30px;
 
-      @include md{
+      @include md {
         justify-content: center;
         margin-right: 0px;
       }

@@ -46,8 +46,8 @@ const customStyles = {
     backgroundColor: state.isSelected
       ? "#007bff"
       : state.isFocused
-      ? "#e6f0ff"
-      : "#fff",
+        ? "#e6f0ff"
+        : "#fff",
     color: state.isSelected ? "#fff" : "#333",
     padding: "8px 12px",
   }),
@@ -107,7 +107,7 @@ const Product = () => {
         cell: (info) => `₹${info.getValue()}`,
       },
     ],
-    []
+    [],
   );
 
   const table = useReactTable({
@@ -211,13 +211,13 @@ const Product = () => {
                   >
                     {flexRender(
                       header.column.columnDef.header,
-                      header.getContext()
+                      header.getContext(),
                     )}
                     {header.column.getIsSorted() === "asc"
                       ? " 🔼"
                       : header.column.getIsSorted() === "desc"
-                      ? " 🔽"
-                      : ""}
+                        ? " 🔽"
+                        : ""}
                   </th>
                 ))}
               </tr>

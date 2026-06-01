@@ -257,7 +257,7 @@ const NewInvoice = () => {
 
   const totalInvoiceAmount = productData.reduce(
     (acc, item) => acc + calculateNetAmount(item),
-    0
+    0,
   );
 
   const calculateDiscountAmount = (item) => {
@@ -280,7 +280,7 @@ const NewInvoice = () => {
 
   const totalDiscountAmount = productData.reduce(
     (acc, item) => acc + calculateDiscountAmount(item),
-    0
+    0,
   );
 
   const [extraDiscount, setExtraDiscount] = useState(0);
@@ -447,7 +447,7 @@ const NewInvoice = () => {
         invoiceData,
         {
           withCredentials: true,
-        }
+        },
       );
 
       if (data && data.invoice) {

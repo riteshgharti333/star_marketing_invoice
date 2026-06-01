@@ -39,7 +39,7 @@ const Login = () => {
           email: formData.email,
           password: formData.password,
         },
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       if (response.data && response.data.result == 1) {
@@ -48,11 +48,11 @@ const Login = () => {
         navigate("/");
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       dispatch({ type: "LOGIN_FAILURE" });
-      
+
       toast.error(
-        error?.response?.data?.message || "Login failed. Please try again."
+        error?.response?.data?.message || "Login failed. Please try again.",
       );
     } finally {
       setLoading(false);

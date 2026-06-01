@@ -20,15 +20,6 @@ import { reportData } from "../../../assets/data";
 import { toast } from "sonner";
 import { FaRegTrashAlt } from "react-icons/fa";
 
-const weekOptions = [
-  { value: "today", label: "Today" },
-  { value: "this_week", label: "This Week" },
-  { value: "last_week", label: "Last Week" },
-  { value: "this_month", label: "This Month" },
-  { value: "last_month", label: "Last Month" },
-  { value: "last_year", label: "Last Year" },
-];
-
 const customStyles = {
   control: (base) => ({
     ...base,
@@ -48,8 +39,8 @@ const customStyles = {
     backgroundColor: state.isSelected
       ? "#007bff"
       : state.isFocused
-      ? "#e6f0ff"
-      : "#fff",
+        ? "#e6f0ff"
+        : "#fff",
     color: state.isSelected ? "#fff" : "#333",
     padding: "8px 12px",
   }),
@@ -60,7 +51,6 @@ const Quotation = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const [openInvoiceCard, setOpenInvoiceCard] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
-  const [selectedRange, setSelectedRange] = useState(weekOptions[5]);
   const [invoiceData, setInvoiceData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -92,10 +82,6 @@ const Quotation = () => {
     setSearchQuery(e.target.value);
   };
 
-  const handleWeekChange = (option) => {
-    setSelectedRange(option);
-  };
-
   const [openMenuId, setOpenMenuId] = useState(null);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
 
@@ -121,52 +107,15 @@ const Quotation = () => {
       result = result.filter((invoice) => {
         return (
           invoice.customer?.name?.toLowerCase().includes(query) ||
-          invoice._id.toLowerCase().includes(query) ||
+          invoice._id?.toLowerCase().includes(query) ||
           invoice.payments?.[0]?.mode?.toLowerCase().includes(query) ||
-          invoice.totalAmount.toString().includes(query)
+          invoice.totalAmount?.toString().includes(query)
         );
       });
     }
 
-    // Apply date range filter
-    if (selectedRange) {
-      const now = new Date();
-      let startDate = new Date();
-
-      switch (selectedRange.value) {
-        case "today":
-          startDate.setHours(0, 0, 0, 0);
-          break;
-        case "this_week":
-          startDate.setDate(now.getDate() - now.getDay());
-          break;
-        case "last_week":
-          startDate.setDate(now.getDate() - now.getDay() - 7);
-          break;
-        case "this_month":
-          startDate.setDate(1);
-          break;
-        case "last_month":
-          startDate.setMonth(now.getMonth() - 1);
-          startDate.setDate(1);
-          break;
-        case "last_year":
-          startDate.setFullYear(now.getFullYear() - 1);
-          startDate.setMonth(0);
-          startDate.setDate(1);
-          break;
-        default:
-          return result;
-      }
-
-      result = result.filter((invoice) => {
-        const invoiceDate = new Date(invoice.quotationDate);
-        return invoiceDate >= startDate;
-      });
-    }
-
     return result;
-  }, [activeFilter, invoiceData, searchQuery, selectedRange]);
+  }, [activeFilter, invoiceData, searchQuery]);
 
   const handleDeleteInvoice = async (invoiceId) => {
     try {
@@ -174,15 +123,14 @@ const Quotation = () => {
         withCredentials: true,
       });
       if (response.data) {
-        console.log(reportData.data);
         setInvoiceData((prevData) =>
-          prevData.filter((invoice) => invoice._id !== invoiceId)
+          prevData.filter((invoice) => invoice._id !== invoiceId),
         );
         toast.success(response.data.message);
       }
     } catch (error) {
       console.error("Error deleting invoice:", error);
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Error deleting quotation");
     } finally {
       setOpenMenuId(null); // Close the dropdown
     }
@@ -193,12 +141,12 @@ const Quotation = () => {
       {
         accessorKey: "totalAmount",
         header: "Amount",
-        cell: (info) => `₹${info.getValue()}`,
+        cell: (info) => `₹${info.getValue() || 0}`,
       },
       {
         accessorKey: "_id",
         header: "Bill No",
-        cell: (info) => info.getValue().slice(-6).toUpperCase(),
+        cell: (info) => info.getValue()?.slice(-6).toUpperCase() || "N/A",
       },
       {
         accessorKey: "customer.name",
@@ -228,8 +176,10 @@ const Quotation = () => {
         accessorKey: "quotationDate",
         header: "Date",
         cell: (info) => {
-          const date = new Date(info.getValue());
-          return date.toLocaleDateString("en-GB", {
+          const date = info.getValue();
+          if (!date) return "N/A";
+          const dateObj = new Date(date);
+          return dateObj.toLocaleDateString("en-GB", {
             day: "2-digit",
             month: "short",
             year: "numeric",
@@ -285,10 +235,11 @@ const Quotation = () => {
         },
       },
     ],
-    []
+    [],
   );
 
   const formatDate = (dateStr) => {
+    if (!dateStr) return "N/A";
     const date = new Date(dateStr);
     if (isNaN(date.getTime())) {
       return "Invalid date";
@@ -345,6 +296,18 @@ const Quotation = () => {
     totalInvoiceAmount += invoice.totalAmount || 0;
   });
 
+  // Helper function to safely get payment mode
+  const getPaymentMode = (item) => {
+    return item?.payments?.[0]?.mode || "N/A";
+  };
+
+  // Helper function to safely get payment status
+  const getPaymentStatus = (item) => {
+    const payment = item?.payments?.[0];
+    if (!payment) return "Pending";
+    return payment.isFullyPaid ? "Paid" : "Pending";
+  };
+
   return (
     <div className="invoice">
       <DropdownMenu />
@@ -389,20 +352,6 @@ const Quotation = () => {
                 onChange={handleSearchChange}
               />
             </div>
-            <div className="invoice-content-inputs-week">
-              <Select
-                options={weekOptions}
-                value={selectedRange}
-                onChange={handleWeekChange}
-                styles={customStyles}
-                isSearchable={false}
-                components={{
-                  DropdownIndicator: () => (
-                    <IoIosArrowDown size={18} color="#555" />
-                  ),
-                }}
-              />
-            </div>
           </div>
           <div className="invoice-content-right">
             <p>
@@ -418,19 +367,19 @@ const Quotation = () => {
             <div className="invoice-sm-item" key={index}>
               <div className="invoice-sm-item-left">
                 <div className="invoice-sm-item-top">
-                  <p>{item?.customer?.name}</p>
+                  <p>{item?.customer?.name || "N/A"}</p>
                 </div>
                 <div className="invoice-sm-item-bill">
                   <span>
-                    {item._id?.slice(-6)}{" "}
-                    <span className="mode">{item?.payments[0].mode}</span>
+                    {item._id?.slice(-6) || "N/A"}{" "}
+                    <span className="mode">{getPaymentMode(item)}</span>
                   </span>
                 </div>
 
                 <div className="invoice-sm-status">
                   <p>
                     <span>Status: </span>
-                    {item?.payments[0].isFullyPaid ? (
+                    {getPaymentStatus(item) === "Paid" ? (
                       <span className="pay-done">Paid</span>
                     ) : (
                       <span className="pay-pending">Pending</span>
@@ -453,11 +402,11 @@ const Quotation = () => {
                 </div>
               </div>
               <div className="invoice-sm-item-right">
-                <h3>₹{item?.totalAmount}</h3>
+                <h3>₹{item?.totalAmount || 0}</h3>
 
                 <p>{formatDate(item.quotationDate)}</p>
 
-                <span onClick={handleDeleteInvoice}>
+                <span onClick={() => handleDeleteInvoice(item?._id)}>
                   <FaRegTrashAlt className="bin-icon" /> Delete
                 </span>
               </div>
@@ -478,13 +427,13 @@ const Quotation = () => {
                   >
                     {flexRender(
                       header.column.columnDef.header,
-                      header.getContext()
+                      header.getContext(),
                     )}
                     {header.column.getIsSorted() === "asc"
                       ? " 🔼"
                       : header.column.getIsSorted() === "desc"
-                      ? " 🔽"
-                      : ""}
+                        ? " 🔽"
+                        : ""}
                   </th>
                 ))}
               </tr>

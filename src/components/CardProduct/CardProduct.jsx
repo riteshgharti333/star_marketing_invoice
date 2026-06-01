@@ -3,8 +3,7 @@ import "./CardProduct.scss";
 import { RxCross2 } from "react-icons/rx";
 import { ArrowRight, CirclePlus } from "lucide-react";
 
-const CardProduct = ({ setOpenCardProduct,product }) => {
-  
+const CardProduct = ({ setOpenCardProduct, product }) => {
   const handleClose = () => {
     setOpenCardProduct(false);
   };
@@ -28,8 +27,6 @@ const CardProduct = ({ setOpenCardProduct,product }) => {
 
         <div className="cardProduct-desc">
           <p className="details">Details</p>
-
-       
         </div>
 
         <div className="cardProduct-price">

@@ -3,7 +3,7 @@ import React from "react";
 import { Document, Page, View, Text } from "@react-pdf/renderer";
 import styles from "./BillingInvoicePDFStyles";
 
-const logoBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."; 
+const logoBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...";
 
 const BillingInvoicePDF = () => (
   <Document>

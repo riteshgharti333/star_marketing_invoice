@@ -1,5 +1,5 @@
 import { sidebarItems } from "../../assets/data";
-import "./BottomBar.scss"
+import "./BottomBar.scss";
 import { Link, useLocation } from "react-router-dom";
 
 export const BottomBar = ({ items }) => {
@@ -10,7 +10,7 @@ export const BottomBar = ({ items }) => {
       {sidebarItems.map((item, index) => {
         const isActive = location.pathname === `/${item.link}`;
         const Icon = item.icon;
-        
+
         return (
           <Link
             key={index}

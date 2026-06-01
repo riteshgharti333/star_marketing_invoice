@@ -160,11 +160,11 @@ const PDF = () => {
           formData.append("recipientEmail", email);
           formData.append(
             "subject",
-            `${name === "quotation" ? "Quotation" : "Invoice"} #${id.slice(-6)}`
+            `${name === "quotation" ? "Quotation" : "Invoice"} #${id.slice(-6)}`,
           );
           formData.append(
             "message",
-            `Dear ${data.customer?.name},\n\nPlease find attached your document.`
+            `Dear ${data.customer?.name},\n\nPlease find attached your document.`,
           );
 
           await axios.post(`${baseUrl}/invoice/send-email`, formData, {
@@ -176,7 +176,7 @@ const PDF = () => {
           success: "Email sent successfully!",
           error: (err) =>
             err?.response?.data?.message || "Failed to send email",
-        }
+        },
       );
     } catch (error) {
       console.error("Error sending email:", error);
@@ -239,7 +239,7 @@ const PDF = () => {
             "message",
             `Dear ${customer?.name},\n\nPlease find attached your ${
               name === "quotation" ? "quotation" : "invoice"
-            } #${shortId}.`
+            } #${shortId}.`,
           );
 
           // Send to your backend which will use Twilio
@@ -248,7 +248,7 @@ const PDF = () => {
             formData,
             {
               headers: { "Content-Type": "multipart/form-data" },
-            }
+            },
           );
 
           return response;
@@ -262,7 +262,7 @@ const PDF = () => {
               err.response?.data?.message || "Failed to send WhatsApp message"
             );
           },
-        }
+        },
       );
     } catch (error) {
       console.error("Error sending WhatsApp:", error);
@@ -439,7 +439,7 @@ const PDF = () => {
                 -₹{" "}
                 {payments?.reduce(
                   (total, payment) => total + (payment.amount || 0),
-                  0
+                  0,
                 )}
               </p>
             </div>

@@ -20,15 +20,6 @@ import { toast } from "sonner";
 import { FaRegTrashAlt, FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
 import { IoMailUnreadOutline } from "react-icons/io5";
 
-const weekOptions = [
-  { value: "today", label: "Today" },
-  { value: "this_week", label: "This Week" },
-  { value: "last_week", label: "Last Week" },
-  { value: "this_month", label: "This Month" },
-  { value: "last_month", label: "Last Month" },
-  { value: "last_year", label: "Last Year" },
-];
-
 const customStyles = {
   control: (base) => ({
     ...base,
@@ -48,8 +39,8 @@ const customStyles = {
     backgroundColor: state.isSelected
       ? "#007bff"
       : state.isFocused
-      ? "#e6f0ff"
-      : "#fff",
+        ? "#e6f0ff"
+        : "#fff",
     color: state.isSelected ? "#fff" : "#333",
     padding: "8px 12px",
   }),
@@ -60,7 +51,6 @@ const Invoice = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const [openInvoiceCard, setOpenInvoiceCard] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
-  const [selectedRange, setSelectedRange] = useState(weekOptions[5]);
   const [invoiceData, setInvoiceData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -92,10 +82,6 @@ const Invoice = () => {
     setSearchQuery(e.target.value);
   };
 
-  const handleWeekChange = (option) => {
-    setSelectedRange(option);
-  };
-
   const [openMenuId, setOpenMenuId] = useState(null);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
 
@@ -124,45 +110,8 @@ const Invoice = () => {
       });
     }
 
-    // Apply date range filter
-    if (selectedRange) {
-      const now = new Date();
-      let startDate = new Date();
-
-      switch (selectedRange.value) {
-        case "today":
-          startDate.setHours(0, 0, 0, 0);
-          break;
-        case "this_week":
-          startDate.setDate(now.getDate() - now.getDay());
-          break;
-        case "last_week":
-          startDate.setDate(now.getDate() - now.getDay() - 7);
-          break;
-        case "this_month":
-          startDate.setDate(1);
-          break;
-        case "last_month":
-          startDate.setMonth(now.getMonth() - 1);
-          startDate.setDate(1);
-          break;
-        case "last_year":
-          startDate.setFullYear(now.getFullYear() - 1);
-          startDate.setMonth(0);
-          startDate.setDate(1);
-          break;
-        default:
-          return result;
-      }
-
-      result = result.filter((invoice) => {
-        const invoiceDate = new Date(invoice.invoiceDate);
-        return invoiceDate >= startDate;
-      });
-    }
-
     return result;
-  }, [activeFilter, invoiceData, searchQuery, selectedRange]);
+  }, [activeFilter, invoiceData, searchQuery]);
 
   const handleDeleteInvoice = async (invoiceId) => {
     try {
@@ -171,7 +120,7 @@ const Invoice = () => {
       });
       if (response.data) {
         setInvoiceData((prevData) =>
-          prevData.filter((invoice) => invoice._id !== invoiceId)
+          prevData.filter((invoice) => invoice._id !== invoiceId),
         );
         toast.success(response.data.message);
       }
@@ -286,7 +235,7 @@ const Invoice = () => {
         },
       },
     ],
-    []
+    [],
   );
 
   const DropdownMenu = () => {
@@ -400,20 +349,6 @@ const Invoice = () => {
                 onChange={handleSearchChange}
               />
             </div>
-            <div className="invoice-content-inputs-week">
-              <Select
-                options={weekOptions}
-                value={selectedRange}
-                onChange={handleWeekChange}
-                styles={customStyles}
-                isSearchable={false}
-                components={{
-                  DropdownIndicator: () => (
-                    <IoIosArrowDown size={18} color="#555" />
-                  ),
-                }}
-              />
-            </div>
           </div>
 
           <div className="invoice-content-right">
@@ -500,13 +435,13 @@ const Invoice = () => {
                   >
                     {flexRender(
                       header.column.columnDef.header,
-                      header.getContext()
+                      header.getContext(),
                     )}
                     {header.column.getIsSorted() === "asc"
                       ? " 🔼"
                       : header.column.getIsSorted() === "desc"
-                      ? " 🔽"
-                      : ""}
+                        ? " 🔽"
+                        : ""}
                   </th>
                 ))}
               </tr>

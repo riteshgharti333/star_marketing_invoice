@@ -92,11 +92,11 @@
 
       display: flex;
       gap: 20%;
-      @include md{
+      @include md {
         gap: 60px;
       }
 
-      @include sm{
+      @include sm {
         gap: 20px;
       }
       .cardProduct-price-item {
@@ -109,7 +109,7 @@
           margin-bottom: 15px;
           font-weight: bold;
 
-          @include md{
+          @include md {
             font-size: 14px;
           }
         }
@@ -121,9 +121,9 @@
           }
         }
 
-        &:last-child{
-          span{
-            color: #E11900;
+        &:last-child {
+          span {
+            color: #e11900;
           }
         }
 
@@ -131,7 +131,7 @@
           font-size: 30px;
           font-weight: bold;
 
-          @include md{
+          @include md {
             font-size: 25px;
           }
         }

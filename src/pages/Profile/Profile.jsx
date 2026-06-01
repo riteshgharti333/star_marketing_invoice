@@ -1,33 +1,39 @@
-import React, { useContext, useState } from "react";
-import { FiUser, FiMail, FiLock, FiEdit, FiCheck, FiX } from "react-icons/fi";
+import React, { useState, useEffect } from "react";
+import { FiUser, FiMail, FiLock } from "react-icons/fi";
 import "./Profile.scss";
-import { Context } from "../../Context/Context";
 import { baseUrl } from "../../main";
 import { toast } from "sonner";
 import axios from "axios";
 
 const Profile = () => {
-  const [name, setName] = useState("Alex Johnson");
-  const [email, setEmail] = useState("alex.johnson@example.com");
-  const [isEditing, setIsEditing] = useState(false);
-  const [tempName, setTempName] = useState(name);
+  const [user, setUser] = useState(null);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
   const [openPass, setOpenPass] = useState(false);
 
-  const { user } = useContext(Context);
+  // Fetch profile on component mount
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const { data } = await axios.get(`${baseUrl}/auth/profile`, {
+          withCredentials: true,
+        });
 
-  const handleEditToggle = () => {
-    if (isEditing) {
-      setName(tempName);
-    } else {
-      setTempName(name);
-    }
-    setIsEditing(!isEditing);
-  };
+        if (data && data.result === 1) {
+          setUser(data?.user);
+        } else {
+          toast.error("Failed to load profile");
+        }
+      } catch (error) {
+        console.error("Profile fetch error:", error);
+        toast.error(error.response?.data?.message || "Error loading profile");
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   const handlePasswordUpdate = async (e) => {
     e.preventDefault();
@@ -49,7 +55,7 @@ const Profile = () => {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       toast.success(response.data.message || "Password updated successfully!");
@@ -62,22 +68,26 @@ const Profile = () => {
     } catch (error) {
       console.error("Password update error:", error);
       toast.error(
-        error?.response?.data?.message || "Failed to update password"
+        error?.response?.data?.message || "Failed to update password",
       );
     }
   };
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <div className="profile-container">
       <div className="profile-card">
         <div className="profile-header">
           <div className="avatar">
-            {user?.user?.name
-              .split(" ")
+            {user?.name
+              ?.split(" ")
               .map((n) => n[0])
               .join("")}
           </div>
-          <h2>{user?.user?.name}</h2>
+          <h2>{user?.name}</h2>
         </div>
 
         <div className="profile-details">
@@ -85,38 +95,15 @@ const Profile = () => {
             <FiUser className="detail-icon" />
             <div className="detail-content">
               <span className="detail-label">Full Name</span>
-              {/* {isEditing ? (
-                <input
-                  type="text"
-                  value={tempName}
-                  onChange={(e) => setTempName(e.target.value)}
-                  className="edit-input"
-                />
-              ) : ( */}
-              <span className="detail-value">{user?.user?.name}</span>
-              {/* )} */}
+              <span className="detail-value">{user?.name}</span>
             </div>
-            {/* <button 
-              onClick={handleEditToggle}
-              className="edit-button"
-            >
-              {isEditing ? <FiCheck /> : <FiEdit />}
-            </button> */}
-            {isEditing && (
-              <button
-                onClick={() => setIsEditing(false)}
-                className="cancel-button"
-              >
-                <FiX />
-              </button>
-            )}
           </div>
 
           <div className="detail-item">
             <FiMail className="detail-icon" />
             <div className="detail-content">
               <span className="detail-label">Email Address</span>
-              <span className="detail-value">{user?.user?.email}</span>
+              <span className="detail-value">{user?.email}</span>
             </div>
           </div>
 

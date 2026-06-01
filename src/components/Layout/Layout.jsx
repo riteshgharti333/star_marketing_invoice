@@ -16,7 +16,6 @@ const Layout = () => {
           <div className="layout-nav">
             <Navbar />
             <BottomBar />
-            
           </div>
 
           <div className="layout-content">

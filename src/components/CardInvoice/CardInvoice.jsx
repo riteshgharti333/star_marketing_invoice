@@ -52,7 +52,7 @@ const CardInvoice = ({ invoiceSmData, setOpenInvoiceCard, title }) => {
   const formattedDueDate = formatDate(dueDate);
 
   const formattedInvoiceDate = formatDate(
-    title === "Quotation" ? invoiceSmData.quotationDate : invoiceDate
+    title === "Quotation" ? invoiceSmData.quotationDate : invoiceDate,
   );
 
   const [moneyRec, setMoneyRec] = useState(moneyReceived);
@@ -78,7 +78,7 @@ const CardInvoice = ({ invoiceSmData, setOpenInvoiceCard, title }) => {
         },
         {
           withCredentials: true,
-        }
+        },
       );
 
       const updatedDoc =
@@ -226,7 +226,7 @@ const CardInvoice = ({ invoiceSmData, setOpenInvoiceCard, title }) => {
                 ₹
                 {payments?.reduce(
                   (total, payment) => total + (payment.amount || 0),
-                  0
+                  0,
                 )}
               </span>
             </div>
